@@ -61,12 +61,12 @@ abstract contract Ownable is Context {
     }
 }
 
-contract Qey is ERC1155, Ownable {
+contract QeyNFT is ERC1155, Ownable {
 
     constructor() public ERC1155() {}
 
     function mint(string memory _hash, string memory _uri) public {
-			
+
     }
 
     function uri(uint256 _tokenId)

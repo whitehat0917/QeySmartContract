@@ -1,4 +1,4 @@
-var coinRacerNFT = artifacts.require('coinRacerNFT');
+var qeyNFT = artifacts.require('QeyNFT');
 module.exports = function(deployer) {
-    deployer.deploy(coinRacerNFT);
+    deployer.deploy(qeyNFT);
 };
