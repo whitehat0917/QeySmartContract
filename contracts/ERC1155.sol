@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (utils/introspection/IERC165.sol)
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -23,9 +24,10 @@ interface IERC165 {
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
 }
 
-// File: openzeppelin-contracts-master/contracts/token/ERC1155/IERC1155.sol
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (token/ERC1155/IERC1155.sol)
 
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 
 /**
@@ -44,7 +46,13 @@ interface IERC1155 is IERC165 {
      * @dev Equivalent to multiple {TransferSingle} events, where `operator`, `from` and `to` are the same for all
      * transfers.
      */
-    event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values);
+    event TransferBatch(
+        address indexed operator,
+        address indexed from,
+        address indexed to,
+        uint256[] ids,
+        uint256[] values
+    );
 
     /**
      * @dev Emitted when `account` grants or revokes permission to `operator` to transfer their tokens, according to
@@ -77,7 +85,10 @@ interface IERC1155 is IERC165 {
      *
      * - `accounts` and `ids` must have the same length.
      */
-    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids) external view returns (uint256[] memory);
+    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids)
+        external
+        view
+        returns (uint256[] memory);
 
     /**
      * @dev Grants or revokes permission to `operator` to transfer the caller's tokens, according to `approved`,
@@ -110,7 +121,13 @@ interface IERC1155 is IERC165 {
      * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
      * acceptance magic value.
      */
-    function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data) external;
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes calldata data
+    ) external;
 
     /**
      * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {safeTransferFrom}.
@@ -123,12 +140,19 @@ interface IERC1155 is IERC165 {
      * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
      * acceptance magic value.
      */
-    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;
+    function safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] calldata ids,
+        uint256[] calldata amounts,
+        bytes calldata data
+    ) external;
 }
 
-// File: openzeppelin-contracts-master/contracts/token/ERC1155/IERC1155MetadataURI.sol
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (interfaces/IERC1155MetadataURI.sol)
 
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 
 /**
@@ -147,160 +171,196 @@ interface IERC1155MetadataURI is IERC1155 {
     function uri(uint256 id) external view returns (string memory);
 }
 
-// File: openzeppelin-contracts-master/contracts/token/ERC1155/IERC1155Receiver.sol
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (interfaces/IERC1155Receiver.sol)
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 
 /**
- * _Available since v3.1._
+ * @dev _Available since v3.1._
  */
 interface IERC1155Receiver is IERC165 {
-
     /**
-        @dev Handles the receipt of a single ERC1155 token type. This function is
-        called at the end of a `safeTransferFrom` after the balance has been updated.
-        To accept the transfer, this must return
-        `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
-        (i.e. 0xf23a6e61, or its own function selector).
-        @param operator The address which initiated the transfer (i.e. msg.sender)
-        @param from The address which previously owned the token
-        @param id The ID of the token being transferred
-        @param value The amount of tokens being transferred
-        @param data Additional data with no specified format
-        @return `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))` if transfer is allowed
-    */
+     * @dev Handles the receipt of a single ERC1155 token type. This function is
+     * called at the end of a `safeTransferFrom` after the balance has been updated.
+     *
+     * NOTE: To accept the transfer, this must return
+     * `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`
+     * (i.e. 0xf23a6e61, or its own function selector).
+     *
+     * @param operator The address which initiated the transfer (i.e. msg.sender)
+     * @param from The address which previously owned the token
+     * @param id The ID of the token being transferred
+     * @param value The amount of tokens being transferred
+     * @param data Additional data with no specified format
+     * @return `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))` if transfer is allowed
+     */
     function onERC1155Received(
         address operator,
         address from,
         uint256 id,
         uint256 value,
         bytes calldata data
-    )
-        external
-        returns(bytes4);
+    ) external returns (bytes4);
 
     /**
-        @dev Handles the receipt of a multiple ERC1155 token types. This function
-        is called at the end of a `safeBatchTransferFrom` after the balances have
-        been updated. To accept the transfer(s), this must return
-        `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
-        (i.e. 0xbc197c81, or its own function selector).
-        @param operator The address which initiated the batch transfer (i.e. msg.sender)
-        @param from The address which previously owned the token
-        @param ids An array containing ids of each token being transferred (order and length must match values array)
-        @param values An array containing amounts of each token being transferred (order and length must match ids array)
-        @param data Additional data with no specified format
-        @return `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))` if transfer is allowed
-    */
+     * @dev Handles the receipt of a multiple ERC1155 token types. This function
+     * is called at the end of a `safeBatchTransferFrom` after the balances have
+     * been updated.
+     *
+     * NOTE: To accept the transfer(s), this must return
+     * `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`
+     * (i.e. 0xbc197c81, or its own function selector).
+     *
+     * @param operator The address which initiated the batch transfer (i.e. msg.sender)
+     * @param from The address which previously owned the token
+     * @param ids An array containing ids of each token being transferred (order and length must match values array)
+     * @param values An array containing amounts of each token being transferred (order and length must match ids array)
+     * @param data Additional data with no specified format
+     * @return `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))` if transfer is allowed
+     */
     function onERC1155BatchReceived(
         address operator,
         address from,
         uint256[] calldata ids,
         uint256[] calldata values,
         bytes calldata data
-    )
-        external
-        returns(bytes4);
+    ) external returns (bytes4);
 }
 
-// File: openzeppelin-contracts-master/contracts/GSN/Context.sol
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (utils/Context.sol)
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
-/*
+/**
  * @dev Provides information about the current execution context, including the
  * sender of the transaction and its data. While these are generally available
  * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with GSN meta-transactions the account sending and
+ * manner, since when dealing with meta-transactions the account sending and
  * paying for execution may not be the actual sender (as far as an application
  * is concerned).
  *
  * This contract is only required for intermediate, library-like contracts.
  */
 abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
+    function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
 
-    function _msgData() internal view virtual returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+    function _msgData() internal view virtual returns (bytes calldata) {
         return msg.data;
     }
 }
 
-// File: openzeppelin-contracts-master/contracts/introspection/ERC165.sol
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (utils/introspection/ERC165.sol)
 
-pragma solidity ^0.6.0;
-
+pragma solidity ^0.8.0;
 
 /**
  * @dev Implementation of the {IERC165} interface.
  *
- * Contracts may inherit from this and call {_registerInterface} to declare
- * their support of an interface.
+ * Contracts that want to implement ERC165 should inherit from this contract and override {supportsInterface} to check
+ * for the additional interface id that will be supported. For example:
+ *
+ * ```solidity
+ * function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+ *     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
+ * }
+ * ```
+ *
+ * Alternatively, {ERC165Storage} provides an easier to use but more expensive implementation.
  */
-contract ERC165 is IERC165 {
-    /*
-     * bytes4(keccak256('supportsInterface(bytes4)')) == 0x01ffc9a7
-     */
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
-    /**
-     * @dev Mapping of interface ids to whether or not it's supported.
-     */
-    mapping(bytes4 => bool) private _supportedInterfaces;
-
-    constructor () internal {
-        // Derived contracts need only register support for their own interfaces,
-        // we register support for ERC165 itself here
-        _registerInterface(_INTERFACE_ID_ERC165);
-    }
-
+abstract contract ERC165 is IERC165 {
     /**
      * @dev See {IERC165-supportsInterface}.
-     *
-     * Time complexity O(1), guaranteed to always use less than 30 000 gas.
      */
-    function supportsInterface(bytes4 interfaceId) public view override returns (bool) {
-        return _supportedInterfaces[interfaceId];
-    }
-
-    /**
-     * @dev Registers the contract as an implementer of the interface defined by
-     * `interfaceId`. Support of the actual ERC165 interface is automatic and
-     * registering its interface id is not required.
-     *
-     * See {IERC165-supportsInterface}.
-     *
-     * Requirements:
-     *
-     * - `interfaceId` cannot be the ERC165 invalid interface (`0xffffffff`).
-     */
-    function _registerInterface(bytes4 interfaceId) internal virtual {
-        require(interfaceId != 0xffffffff, "ERC165: invalid interface id");
-        _supportedInterfaces[interfaceId] = true;
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == type(IERC165).interfaceId;
     }
 }
 
-// File: openzeppelin-contracts-master/contracts/math/SafeMath.sol
+pragma solidity ^0.8.0;
 
-pragma solidity ^0.6.0;
+// CAUTION
+// This version of SafeMath should only be used with Solidity 0.8 or later,
+// because it relies on the compiler's built in overflow checks.
 
 /**
- * @dev Wrappers over Solidity's arithmetic operations with added overflow
- * checks.
+ * @dev Wrappers over Solidity's arithmetic operations.
  *
- * Arithmetic operations in Solidity wrap on overflow. This can easily result
- * in bugs, because programmers usually assume that an overflow raises an
- * error, which is the standard behavior in high level programming languages.
- * `SafeMath` restores this intuition by reverting the transaction when an
- * operation overflows.
- *
- * Using this library instead of the unchecked operations eliminates an entire
- * class of bugs, so it's recommended to use it always.
+ * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler
+ * now has built in overflow checking.
  */
 library SafeMath {
+    /**
+     * @dev Returns the addition of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    /**
+     * @dev Returns the substraction of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b > a) return (false, 0);
+            return (true, a - b);
+        }
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+            // benefit is lost if 'b' is also tested.
+            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    /**
+     * @dev Returns the division of two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
+    }
+
     /**
      * @dev Returns the addition of two unsigned integers, reverting on
      * overflow.
@@ -312,10 +372,7 @@ library SafeMath {
      * - Addition cannot overflow.
      */
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        require(c >= a, "SafeMath: addition overflow");
-
-        return c;
+        return a + b;
     }
 
     /**
@@ -329,24 +386,7 @@ library SafeMath {
      * - Subtraction cannot overflow.
      */
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        return sub(a, b, "SafeMath: subtraction overflow");
-    }
-
-    /**
-     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
-     * overflow (when the result is negative).
-     *
-     * Counterpart to Solidity's `-` operator.
-     *
-     * Requirements:
-     *
-     * - Subtraction cannot overflow.
-     */
-    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b <= a, errorMessage);
-        uint256 c = a - b;
-
-        return c;
+        return a - b;
     }
 
     /**
@@ -360,58 +400,26 @@ library SafeMath {
      * - Multiplication cannot overflow.
      */
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-        // benefit is lost if 'b' is also tested.
-        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
-        if (a == 0) {
-            return 0;
-        }
-
-        uint256 c = a * b;
-        require(c / a == b, "SafeMath: multiplication overflow");
-
-        return c;
+        return a * b;
     }
 
     /**
-     * @dev Returns the integer division of two unsigned integers. Reverts on
+     * @dev Returns the integer division of two unsigned integers, reverting on
      * division by zero. The result is rounded towards zero.
      *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
+     * Counterpart to Solidity's `/` operator.
      *
      * Requirements:
      *
      * - The divisor cannot be zero.
      */
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        return div(a, b, "SafeMath: division by zero");
-    }
-
-    /**
-     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on
-     * division by zero. The result is rounded towards zero.
-     *
-     * Counterpart to Solidity's `/` operator. Note: this function uses a
-     * `revert` opcode (which leaves remaining gas untouched) while Solidity
-     * uses an invalid opcode to revert (consuming all remaining gas).
-     *
-     * Requirements:
-     *
-     * - The divisor cannot be zero.
-     */
-    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b > 0, errorMessage);
-        uint256 c = a / b;
-        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-
-        return c;
+        return a / b;
     }
 
     /**
      * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * Reverts when dividing by zero.
+     * reverting when dividing by zero.
      *
      * Counterpart to Solidity's `%` operator. This function uses a `revert`
      * opcode (which leaves remaining gas untouched) while Solidity uses an
@@ -422,12 +430,62 @@ library SafeMath {
      * - The divisor cannot be zero.
      */
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        return mod(a, b, "SafeMath: modulo by zero");
+        return a % b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {trySub}.
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
     }
 
     /**
      * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-     * Reverts with custom message when dividing by zero.
+     * reverting with custom message when dividing by zero.
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {tryMod}.
      *
      * Counterpart to Solidity's `%` operator. This function uses a `revert`
      * opcode (which leaves remaining gas untouched) while Solidity uses an
@@ -437,15 +495,19 @@ library SafeMath {
      *
      * - The divisor cannot be zero.
      */
-    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        require(b != 0, errorMessage);
-        return a % b;
+    function mod(
+        uint256 a,
+        uint256 b,
+        string memory errorMessage
+    ) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
     }
 }
 
-// File: openzeppelin-contracts-master/contracts/utils/Address.sol
-
-pragma solidity ^0.6.2;
+pragma solidity ^0.8.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -474,8 +536,9 @@ library Address {
         // constructor execution.
 
         uint256 size;
-        // solhint-disable-next-line no-inline-assembly
-        assembly { size := extcodesize(account) }
+        assembly {
+            size := extcodesize(account)
+        }
         return size > 0;
     }
 
@@ -496,16 +559,21 @@ library Address {
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address: insufficient balance");
+        require(
+            address(this).balance >= amount,
+            "Address: insufficient balance"
+        );
 
-        // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
-        (bool success, ) = recipient.call{ value: amount }("");
-        require(success, "Address: unable to send value, recipient may have reverted");
+        (bool success, ) = recipient.call{value: amount}("");
+        require(
+            success,
+            "Address: unable to send value, recipient may have reverted"
+        );
     }
 
     /**
      * @dev Performs a Solidity function call using a low level `call`. A
-     * plain`call` is an unsafe replacement for a function call: use this
+     * plain `call` is an unsafe replacement for a function call: use this
      * function instead.
      *
      * If `target` reverts with a revert reason, it is bubbled up by this
@@ -521,8 +589,11 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
-      return functionCall(target, data, "Address: low-level call failed");
+    function functionCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
+        return functionCall(target, data, "Address: low-level call failed");
     }
 
     /**
@@ -531,7 +602,11 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+    function functionCall(
+        address target,
+        bytes memory data,
+        string memory errorMessage
+    ) internal returns (bytes memory) {
         return functionCallWithValue(target, data, 0, errorMessage);
     }
 
@@ -546,8 +621,18 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCallWithValue(address target, bytes memory data, uint256 value) internal returns (bytes memory) {
-        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+    function functionCallWithValue(
+        address target,
+        bytes memory data,
+        uint256 value
+    ) internal returns (bytes memory) {
+        return
+            functionCallWithValue(
+                target,
+                data,
+                value,
+                "Address: low-level call with value failed"
+            );
     }
 
     /**
@@ -556,12 +641,21 @@ library Address {
      *
      * _Available since v3.1._
      */
-    function functionCallWithValue(address target, bytes memory data, uint256 value, string memory errorMessage) internal returns (bytes memory) {
-        require(address(this).balance >= value, "Address: insufficient balance for call");
+    function functionCallWithValue(
+        address target,
+        bytes memory data,
+        uint256 value,
+        string memory errorMessage
+    ) internal returns (bytes memory) {
+        require(
+            address(this).balance >= value,
+            "Address: insufficient balance for call"
+        );
         require(isContract(target), "Address: call to non-contract");
 
-        // solhint-disable-next-line avoid-low-level-calls
-        (bool success, bytes memory returndata) = target.call{ value: value }(data);
+        (bool success, bytes memory returndata) = target.call{value: value}(
+            data
+        );
         return _verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -571,8 +665,17 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
-        return functionStaticCall(target, data, "Address: low-level static call failed");
+    function functionStaticCall(address target, bytes memory data)
+        internal
+        view
+        returns (bytes memory)
+    {
+        return
+            functionStaticCall(
+                target,
+                data,
+                "Address: low-level static call failed"
+            );
     }
 
     /**
@@ -581,10 +684,13 @@ library Address {
      *
      * _Available since v3.3._
      */
-    function functionStaticCall(address target, bytes memory data, string memory errorMessage) internal view returns (bytes memory) {
+    function functionStaticCall(
+        address target,
+        bytes memory data,
+        string memory errorMessage
+    ) internal view returns (bytes memory) {
         require(isContract(target), "Address: static call to non-contract");
 
-        // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory returndata) = target.staticcall(data);
         return _verifyCallResult(success, returndata, errorMessage);
     }
@@ -593,27 +699,42 @@ library Address {
      * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],
      * but performing a delegate call.
      *
-     * _Available since v3.3._
+     * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
-        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    function functionDelegateCall(address target, bytes memory data)
+        internal
+        returns (bytes memory)
+    {
+        return
+            functionDelegateCall(
+                target,
+                data,
+                "Address: low-level delegate call failed"
+            );
     }
 
     /**
      * @dev Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],
      * but performing a delegate call.
      *
-     * _Available since v3.3._
+     * _Available since v3.4._
      */
-    function functionDelegateCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+    function functionDelegateCall(
+        address target,
+        bytes memory data,
+        string memory errorMessage
+    ) internal returns (bytes memory) {
         require(isContract(target), "Address: delegate call to non-contract");
 
-        // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory returndata) = target.delegatecall(data);
         return _verifyCallResult(success, returndata, errorMessage);
     }
 
-    function _verifyCallResult(bool success, bytes memory returndata, string memory errorMessage) private pure returns(bytes memory) {
+    function _verifyCallResult(
+        bool success,
+        bytes memory returndata,
+        string memory errorMessage
+    ) private pure returns (bytes memory) {
         if (success) {
             return returndata;
         } else {
@@ -621,7 +742,6 @@ library Address {
             if (returndata.length > 0) {
                 // The easiest way to bubble the revert reason is using memory via assembly
 
-                // solhint-disable-next-line no-inline-assembly
                 assembly {
                     let returndata_size := mload(returndata)
                     revert(add(32, returndata), returndata_size)
@@ -647,60 +767,46 @@ contract TokenURI {
   }
 }
 
-// File: openzeppelin-contracts-master/contracts/token/ERC1155/ERC1155.sol
-pragma solidity ^0.6.0;
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.0 (token/ERC1155/ERC1155.sol)
+
+pragma solidity ^0.8.0;
 
 
 /**
- *
  * @dev Implementation of the basic standard multi-token.
  * See https://eips.ethereum.org/EIPS/eip-1155
  * Originally based on code by Enjin: https://github.com/enjin/erc-1155
  *
  * _Available since v3.1._
  */
-contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
-    using SafeMath for uint256;
+contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     using Address for address;
 
     // Mapping from token ID to account balances
-    mapping (uint256 => mapping(address => uint256)) private _balances;
+    mapping(uint256 => mapping(address => uint256)) private _balances;
 
     // Mapping from account to operator approvals
-    mapping (address => mapping(address => bool)) private _operatorApprovals;
+    mapping(address => mapping(address => bool)) private _operatorApprovals;
 
     // Used as the URI for all token types by relying on ID substitution, e.g. https://token-cdn-domain/{id}.json
     string private _uri;
 
-    /*
-     *     bytes4(keccak256('balanceOf(address,uint256)')) == 0x00fdd58e
-     *     bytes4(keccak256('balanceOfBatch(address[],uint256[])')) == 0x4e1273f4
-     *     bytes4(keccak256('setApprovalForAll(address,bool)')) == 0xa22cb465
-     *     bytes4(keccak256('isApprovedForAll(address,address)')) == 0xe985e9c5
-     *     bytes4(keccak256('safeTransferFrom(address,address,uint256,uint256,bytes)')) == 0xf242432a
-     *     bytes4(keccak256('safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)')) == 0x2eb2c2d6
-     *
-     *     => 0x00fdd58e ^ 0x4e1273f4 ^ 0xa22cb465 ^
-     *        0xe985e9c5 ^ 0xf242432a ^ 0x2eb2c2d6 == 0xd9b67a26
-     */
-    bytes4 private constant _INTERFACE_ID_ERC1155 = 0xd9b67a26;
-
-    /*
-     *     bytes4(keccak256('uri(uint256)')) == 0x0e89341c
-     */
-    bytes4 private constant _INTERFACE_ID_ERC1155_METADATA_URI = 0x0e89341c;
-
     /**
      * @dev See {_setURI}.
      */
-    constructor (string memory uri) public {
-        _setURI(uri);
+    constructor(string memory uri_) {
+        _setURI(uri_);
+    }
 
-        // register the supported interfaces to conform to ERC1155 via ERC165
-        _registerInterface(_INTERFACE_ID_ERC1155);
-
-        // register the supported interfaces to conform to ERC1155MetadataURI via ERC165
-        _registerInterface(_INTERFACE_ID_ERC1155_METADATA_URI);
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
+        return
+            interfaceId == type(IERC1155).interfaceId ||
+            interfaceId == type(IERC1155MetadataURI).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 
     /**
@@ -713,8 +819,8 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
      * Clients calling this function must replace the `\{id\}` substring with the
      * actual token type ID.
      */
-    function uri(uint256 id) external view virtual override returns (string memory) {
-        return _tokenURI(id);
+    function uri(uint256) public view virtual override returns (string memory) {
+        return _uri;
     }
 
     /**
@@ -724,7 +830,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
      *
      * - `account` cannot be the zero address.
      */
-    function balanceOf(address account, uint256 id) public view override returns (uint256) {
+    function balanceOf(address account, uint256 id) public view virtual override returns (uint256) {
         require(account != address(0), "ERC1155: balance query for the zero address");
         return _balances[id][account];
     }
@@ -736,12 +842,10 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
      *
      * - `accounts` and `ids` must have the same length.
      */
-    function balanceOfBatch(
-        address[] memory accounts,
-        uint256[] memory ids
-    )
+    function balanceOfBatch(address[] memory accounts, uint256[] memory ids)
         public
         view
+        virtual
         override
         returns (uint256[] memory)
     {
@@ -750,8 +854,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
         uint256[] memory batchBalances = new uint256[](accounts.length);
 
         for (uint256 i = 0; i < accounts.length; ++i) {
-            require(accounts[i] != address(0), "ERC1155: batch balance query for the zero address");
-            batchBalances[i] = _balances[ids[i]][accounts[i]];
+            batchBalances[i] = balanceOf(accounts[i], ids[i]);
         }
 
         return batchBalances;
@@ -761,16 +864,13 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
      * @dev See {IERC1155-setApprovalForAll}.
      */
     function setApprovalForAll(address operator, bool approved) public virtual override {
-        require(_msgSender() != operator, "ERC1155: setting approval status for self");
-
-        _operatorApprovals[_msgSender()][operator] = approved;
-        emit ApprovalForAll(_msgSender(), operator, approved);
+        _setApprovalForAll(_msgSender(), operator, approved);
     }
 
     /**
      * @dev See {IERC1155-isApprovedForAll}.
      */
-    function isApprovedForAll(address account, address operator) public view override returns (bool) {
+    function isApprovedForAll(address account, address operator) public view virtual override returns (bool) {
         return _operatorApprovals[account][operator];
     }
 
@@ -783,27 +883,12 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
         uint256 id,
         uint256 amount,
         bytes memory data
-    )
-        public
-        virtual
-        override
-    {
-        require(to != address(0), "ERC1155: transfer to the zero address");
+    ) public virtual override {
         require(
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: caller is not owner nor approved"
         );
-
-        address operator = _msgSender();
-
-        _beforeTokenTransfer(operator, from, to, _asSingletonArray(id), _asSingletonArray(amount), data);
-
-        _balances[id][from] = _balances[id][from].sub(amount, "ERC1155: insufficient balance for transfer");
-        _balances[id][to] = _balances[id][to].add(amount);
-
-        emit TransferSingle(operator, from, to, id, amount);
-
-        _doSafeTransferAcceptanceCheck(operator, from, to, id, amount, data);
+        _safeTransferFrom(from, to, id, amount, data);
     }
 
     /**
@@ -815,17 +900,70 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
         uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
-    )
-        public
-        virtual
-        override
-    {
-        require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
-        require(to != address(0), "ERC1155: transfer to the zero address");
+    ) public virtual override {
         require(
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: transfer caller is not owner nor approved"
         );
+        _safeBatchTransferFrom(from, to, ids, amounts, data);
+    }
+
+    /**
+     * @dev Transfers `amount` tokens of token type `id` from `from` to `to`.
+     *
+     * Emits a {TransferSingle} event.
+     *
+     * Requirements:
+     *
+     * - `to` cannot be the zero address.
+     * - `from` must have a balance of tokens of type `id` of at least `amount`.
+     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
+     * acceptance magic value.
+     */
+    function _safeTransferFrom(
+        address from,
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes memory data
+    ) internal virtual {
+        require(to != address(0), "ERC1155: transfer to the zero address");
+
+        address operator = _msgSender();
+
+        _beforeTokenTransfer(operator, from, to, _asSingletonArray(id), _asSingletonArray(amount), data);
+
+        uint256 fromBalance = _balances[id][from];
+        require(fromBalance >= amount, "ERC1155: insufficient balance for transfer");
+        unchecked {
+            _balances[id][from] = fromBalance - amount;
+        }
+        _balances[id][to] += amount;
+
+        emit TransferSingle(operator, from, to, id, amount);
+
+        _doSafeTransferAcceptanceCheck(operator, from, to, id, amount, data);
+    }
+
+    /**
+     * @dev xref:ROOT:erc1155.adoc#batch-operations[Batched] version of {_safeTransferFrom}.
+     *
+     * Emits a {TransferBatch} event.
+     *
+     * Requirements:
+     *
+     * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
+     * acceptance magic value.
+     */
+    function _safeBatchTransferFrom(
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) internal virtual {
+        require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
+        require(to != address(0), "ERC1155: transfer to the zero address");
 
         address operator = _msgSender();
 
@@ -835,11 +973,12 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
             uint256 id = ids[i];
             uint256 amount = amounts[i];
 
-            _balances[id][from] = _balances[id][from].sub(
-                amount,
-                "ERC1155: insufficient balance for transfer"
-            );
-            _balances[id][to] = _balances[id][to].add(amount);
+            uint256 fromBalance = _balances[id][from];
+            require(fromBalance >= amount, "ERC1155: insufficient balance for transfer");
+            unchecked {
+                _balances[id][from] = fromBalance - amount;
+            }
+            _balances[id][to] += amount;
         }
 
         emit TransferBatch(operator, from, to, ids, amounts);
@@ -871,39 +1010,32 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
     }
 
     /**
-     * @dev Creates `amount` tokens of token type `id`, and assigns them to `account`.
+     * @dev Creates `amount` tokens of token type `id`, and assigns them to `to`.
      *
      * Emits a {TransferSingle} event.
      *
      * Requirements:
      *
-     * - `account` cannot be the zero address.
+     * - `to` cannot be the zero address.
      * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
      * acceptance magic value.
      */
-    function _mint(address account, uint256 tokenId, uint256 amount, string memory tokenUri, bytes memory data) internal virtual {
-        require(account != address(0), "ERC1155: mint to the zero address");
+    function _mint(
+        address to,
+        uint256 id,
+        uint256 amount,
+        bytes memory data
+    ) internal virtual {
+        require(to != address(0), "ERC1155: mint to the zero address");
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, address(0), account, _asSingletonArray(tokenId), _asSingletonArray(amount), data);
+        _beforeTokenTransfer(operator, address(0), to, _asSingletonArray(id), _asSingletonArray(amount), data);
 
-        _balances[tokenId][account] = _balances[tokenId][account].add(amount);
-        _setTokenURI(tokenId, tokenUri);
+        _balances[id][to] += amount;
+        emit TransferSingle(operator, address(0), to, id, amount);
 
-        emit TransferSingle(operator, address(0), account, tokenId, amount);
-
-        _doSafeTransferAcceptanceCheck(operator, address(0), account, tokenId, amount, data);
-    }
-
-    /**
-    * @dev Internal function to set the token URI for a given token.
-    * Reverts if the token ID does not exist.
-    * @param tokenId uint256 ID of the token to set its URI
-    * @param tokenUri string URI to assign
-    */
-    function _setTokenURI(uint256 tokenId, string memory tokenUri) internal override {
-      super._setTokenURI(tokenId, tokenUri);
+        _doSafeTransferAcceptanceCheck(operator, address(0), to, id, amount, data);
     }
 
     /**
@@ -915,7 +1047,12 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
      * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155BatchReceived} and return the
      * acceptance magic value.
      */
-    function _mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) internal virtual {
+    function _mintBatch(
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) internal virtual {
         require(to != address(0), "ERC1155: mint to the zero address");
         require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
 
@@ -923,8 +1060,8 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
 
         _beforeTokenTransfer(operator, address(0), to, ids, amounts, data);
 
-        for (uint i = 0; i < ids.length; i++) {
-            _balances[ids[i]][to] = amounts[i].add(_balances[ids[i]][to]);
+        for (uint256 i = 0; i < ids.length; i++) {
+            _balances[ids[i]][to] += amounts[i];
         }
 
         emit TransferBatch(operator, address(0), to, ids, amounts);
@@ -933,26 +1070,31 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
     }
 
     /**
-     * @dev Destroys `amount` tokens of token type `id` from `account`
+     * @dev Destroys `amount` tokens of token type `id` from `from`
      *
      * Requirements:
      *
-     * - `account` cannot be the zero address.
-     * - `account` must have at least `amount` tokens of token type `id`.
+     * - `from` cannot be the zero address.
+     * - `from` must have at least `amount` tokens of token type `id`.
      */
-    function _burn(address account, uint256 id, uint256 amount) internal virtual {
-        require(account != address(0), "ERC1155: burn from the zero address");
+    function _burn(
+        address from,
+        uint256 id,
+        uint256 amount
+    ) internal virtual {
+        require(from != address(0), "ERC1155: burn from the zero address");
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, account, address(0), _asSingletonArray(id), _asSingletonArray(amount), "");
+        _beforeTokenTransfer(operator, from, address(0), _asSingletonArray(id), _asSingletonArray(amount), "");
 
-        _balances[id][account] = _balances[id][account].sub(
-            amount,
-            "ERC1155: burn amount exceeds balance"
-        );
+        uint256 fromBalance = _balances[id][from];
+        require(fromBalance >= amount, "ERC1155: burn amount exceeds balance");
+        unchecked {
+            _balances[id][from] = fromBalance - amount;
+        }
 
-        emit TransferSingle(operator, account, address(0), id, amount);
+        emit TransferSingle(operator, from, address(0), id, amount);
     }
 
     /**
@@ -962,22 +1104,45 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
      *
      * - `ids` and `amounts` must have the same length.
      */
-    function _burnBatch(address account, uint256[] memory ids, uint256[] memory amounts) internal virtual {
-        require(account != address(0), "ERC1155: burn from the zero address");
+    function _burnBatch(
+        address from,
+        uint256[] memory ids,
+        uint256[] memory amounts
+    ) internal virtual {
+        require(from != address(0), "ERC1155: burn from the zero address");
         require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, account, address(0), ids, amounts, "");
+        _beforeTokenTransfer(operator, from, address(0), ids, amounts, "");
 
-        for (uint i = 0; i < ids.length; i++) {
-            _balances[ids[i]][account] = _balances[ids[i]][account].sub(
-                amounts[i],
-                "ERC1155: burn amount exceeds balance"
-            );
+        for (uint256 i = 0; i < ids.length; i++) {
+            uint256 id = ids[i];
+            uint256 amount = amounts[i];
+
+            uint256 fromBalance = _balances[id][from];
+            require(fromBalance >= amount, "ERC1155: burn amount exceeds balance");
+            unchecked {
+                _balances[id][from] = fromBalance - amount;
+            }
         }
 
-        emit TransferBatch(operator, account, address(0), ids, amounts);
+        emit TransferBatch(operator, from, address(0), ids, amounts);
+    }
+
+    /**
+     * @dev Approve `operator` to operate on all of `owner` tokens
+     *
+     * Emits a {ApprovalForAll} event.
+     */
+    function _setApprovalForAll(
+        address owner,
+        address operator,
+        bool approved
+    ) internal virtual {
+        require(owner != operator, "ERC1155: setting approval status for self");
+        _operatorApprovals[owner][operator] = approved;
+        emit ApprovalForAll(owner, operator, approved);
     }
 
     /**
@@ -1007,9 +1172,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
         uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
-    )
-        internal virtual
-    { }
+    ) internal virtual {}
 
     function _doSafeTransferAcceptanceCheck(
         address operator,
@@ -1018,12 +1181,10 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
         uint256 id,
         uint256 amount,
         bytes memory data
-    )
-        private
-    {
+    ) private {
         if (to.isContract()) {
             try IERC1155Receiver(to).onERC1155Received(operator, from, id, amount, data) returns (bytes4 response) {
-                if (response != IERC1155Receiver(to).onERC1155Received.selector) {
+                if (response != IERC1155Receiver.onERC1155Received.selector) {
                     revert("ERC1155: ERC1155Receiver rejected tokens");
                 }
             } catch Error(string memory reason) {
@@ -1041,12 +1202,12 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI, TokenURI {
         uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
-    )
-        private
-    {
+    ) private {
         if (to.isContract()) {
-            try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (bytes4 response) {
-                if (response != IERC1155Receiver(to).onERC1155BatchReceived.selector) {
+            try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (
+                bytes4 response
+            ) {
+                if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {
                     revert("ERC1155: ERC1155Receiver rejected tokens");
                 }
             } catch Error(string memory reason) {
